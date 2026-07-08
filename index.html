@@ -401,7 +401,7 @@
         });
 
         // ---- État applicatif & Logique Backend ----
-        const API_BASE = ''; 
+        const API_BASE = 'http://localhost:3000'; 
         const APP_MODE = 'sandbox'; 
         let currentSessionId = null;
         let currentFormula = null;
@@ -492,7 +492,6 @@
 
                 statusEl.textContent = currentLang === 'fr' ? 'Confirmez sur votre téléphone (USSD)... En attente de validation.' : 'Confirm on your phone (USSD)... Waiting for validation.';
                 
-                // Si Monetbil renvoie une URL de paiement directe (Widget v2.1)
                 if(data.payment_url) {
                     window.location.href = data.payment_url;
                 }
