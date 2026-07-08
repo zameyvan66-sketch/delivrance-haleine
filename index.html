@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Délivrance Haleine - Diagnostic</title>
+    <style>
+        :root {
+            --primary: #0070f3;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .btn-translate {
+            align-self: flex-end;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .question {
+            margin-bottom: 25px;
+        }
+        h2 { color: var(--primary); }
+        .options label {
+            display: block;
+            background: #f0f2f5;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .options label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; }
+        .btn-next {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-translate" id="langBtn" onclick="toggleLanguage()">English</button>
+
+    <div class="container">
+        <h1 id="mainTitle">Diagnostic Mauvaise Haleine</h1>
+        <p id="mainDesc">Répondez à ces questions pour obtenir votre bilan personnalisé.</p>
+        
+        <hr>
+
+        <div id="quiz">
+            <!-- Les questions vont s'afficher ici dynamiquement -->
+            <div class="question">
+                <h3 id="qTitle">Question 1 : À quelle fréquence vous brossez-vous les dents ?</h3>
+                <div class="options" id="qOptions">
+                    <label><input type="radio" name="q1" value="3"> 3 fois par jour ou plus</label>
+                    <label><input type="radio" name="q1" value="2"> 2 fois par jour</label>
+                    <label><input type="radio" name="q1" value="1"> 1 fois par jour ou moins</label>
+                </div>
+            </div>
+            
+            <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        // Système de traduction basique
+        let currentLang = 'fr';
+        const content = {
+            fr: {
+                title: "Diagnostic Mauvaise Haleine",
+                desc: "Répondez à ces questions pour obtenir votre bilan personnalisé.",
+                btn: "English",
+                next: "Suivant"
+            },
+            en: {
+                title: "Bad Breath Diagnosis",
+                desc: "Answer these questions to get your personalized report.",
+                btn: "Français",
+                next: "Next"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            document.getElementById('mainTitle').innerText = content[currentLang].title;
+            document.getElementById('mainDesc').innerText = content[currentLang].desc;
+            document.getElementById('langBtn').innerText = content[currentLang].btn;
+            document.getElementById('nextBtn').innerText = content[currentLang].next;
+            // Note: C'est ici qu'on gérera la traduction des questions en dynamique
+        }
+
+        function nextQuestion() {
+            alert("Bravo ! Le questionnaire fonctionne. Nous allons lier la suite au paiement Monetbil.");
+        }
+    </script>
+</body>
+</html>
