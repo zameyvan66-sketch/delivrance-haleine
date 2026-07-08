@@ -3,123 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Délivrance Haleine - Diagnostic</title>
+    <title>Délivrance Haleine - Protocole Clinique / Clinical Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary: #0070f3;
-            --bg: #f4f7f6;
-            --text: #333;
+        .premium-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 100%;
-            margin-top: 20px;
-        }
-        .btn-translate {
-            align-self: flex-end;
-            background: #333;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .question {
-            margin-bottom: 25px;
-        }
-        h2 { color: var(--primary); }
-        .options label {
-            display: block;
-            background: #f0f2f5;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .options label:hover { background: #e2e6ea; }
-        input[type="radio"] { margin-right: 10px; }
-        .btn-next {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
+        @media print {
+            #finalReport, #conversionGate {
+                display: none !important;
+            }
+            body::after {
+                content: "Impression désactivée pour ce document. Consultez-le en ligne sur Délivrance Haleine.";
+                display: block;
+                text-align: center;
+                padding: 4rem 2rem;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <button class="btn-translate" id="langBtn" onclick="toggleLanguage()">English</button>
+    <header class="bg-white border-b border-slate-200 p-5 shadow-sm">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black tracking-tight text-slate-900 flex items-center gap-2">
+                <span class="text-indigo-600">🌿</span> Délivrance Haleine
+            </h1>
+            <div class="flex items-center gap-4">
+                <button id="langBtn" onclick="toggleLanguage()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-full transition">
+                    🇬🇧 English
+                </button>
+                <span id="badgeSecure" class="text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1 rounded-full font-bold uppercase tracking-wider hidden md:inline">Analyse Algorithmique Sécurisée</span>
+            </div>
+        </div>
+    </header>
 
-    <div class="container">
-        <h1 id="mainTitle">Diagnostic Mauvaise Haleine</h1>
-        <p id="mainDesc">Répondez à ces questions pour obtenir votre bilan personnalisé.</p>
-        
-        <hr>
+    <main class="max-w-3xl mx-auto my-8 p-6 bg-white rounded-2xl shadow-xl border border-slate-100 w-full md:w-11/12">
 
-        <div id="quiz">
-            <!-- Les questions vont s'afficher ici dynamiquement -->
-            <div class="question">
-                <h3 id="qTitle">Question 1 : À quelle fréquence vous brossez-vous les dents ?</h3>
-                <div class="options" id="qOptions">
-                    <label><input type="radio" name="q1" value="3"> 3 fois par jour ou plus</label>
-                    <label><input type="radio" name="q1" value="2"> 2 fois par jour</label>
-                    <label><input type="radio" name="q1" value="1"> 1 fois par jour ou moins</label>
+        <div class="mb-10 bg-gradient-to-br from-indigo-50/70 to-slate-50 p-6 rounded-2xl border border-indigo-100/80">
+            <h2 id="welcomeTitle" class="text-2xl font-black text-slate-900 tracking-tight mb-3">
+                Bienvenue sur Délivrance Haleine. <br>
+                <span class="text-indigo-600 text-xl font-bold">Vous êtes exactement au bon endroit, et vous pouvez enfin souffler.</span>
+            </h2>
+            <div id="welcomeText" class="text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p>Si vous êtes ici, c'est probablement parce que vous vivez avec un poids invisible au quotidien. La peur de parler de près, les chewing-gums qui s'enchaînent, les sourires retenus et cette sensation d'avoir tout essayé sans jamais trouver de vraie solution.</p>
+                <p class="font-semibold text-slate-700">Sachez une chose : ce n'est pas de votre faute, et ce n'est pas un problème d'hygiène.</p>
+                <p>Notre protocole scientifique est conçu pour briser ce tabou. En moins de 5 minutes, notre algorithme va analyser vos signaux corporels (gastriques, buccaux et ORL) pour identifier la source exacte et invisible de votre inconfort. Ce bilan est <strong class="text-indigo-600">100 % anonyme, confidentiel et sécurisé</strong>. Votre délivrance commence maintenant.</p>
+            </div>
+        </div>
+
+        <div id="legalWarning" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl mb-8 text-xs text-amber-900 leading-relaxed">
+            <p class="font-bold mb-1 uppercase tracking-wider text-[10px]">⚠️ Avertissement Légal :</p>
+            Cette application est un outil d'orientation et de bien-être. Elle ne remplace en aucun cas une consultation médicale, un diagnostic médical ou une ordonnance.
+        </div>
+
+        <form id="mainForm" class="space-y-8">
+            <h3 id="formTitle" class="text-lg font-bold text-slate-900 border-b pb-2">Dossier d'Analyse Clinique</h3>
+
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/60 space-y-4">
+                <h3 id="titleGastrique" class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2">📋 Évaluation Spécifique : Sphère Gastrique</h3>
+
+                <div class="space-y-2">
+                    <label id="labelG1" class="block text-sm font-medium text-slate-700">1. Ressentez-vous des brûlures d'estomac ou des reflux acides qui remontent dans la gorge ?</label>
+                    <select id="selectG1" name="g1" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Jamais ou très rarement</option>
+                        <option value="3">Parfois, après des repas particulièrement lourds</option>
+                        <option value="6">Très souvent, surtout la nuit, au réveil ou en position allongée</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelG2" class="block text-sm font-medium text-slate-700">2. Comment réagit votre système digestif après un repas pimenté, épicé ou très gras ?</label>
+                    <select id="selectG2" name="g2" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Je digère parfaitement sans aucun inconfort</option>
+                        <option value="6">Crampes, ballonnements immédiats, ou sensation d'estomac totalement bloqué</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelG3" class="block text-sm font-medium text-slate-700">3. Avez-vous de fréquentes éructations (rots) après les repas, et l'air expulsé a-t-il une odeur ou un goût fétide ?</label>
+                    <select id="selectG3" name="g3" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, c'est très rare ou absent</option>
+                        <option value="5">Oui, l'air qui remonte de l'estomac dégage une odeur lourde et persistante</option>
+                    </select>
                 </div>
             </div>
-            
-            <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Suivant</button>
+
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/60 space-y-4">
+                <h3 id="titleBucco" class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">🦷 Évaluation Spécifique : Sphère Bucco-Dentaire</h3>
+
+                <div class="space-y-2">
+                    <label id="labelB1" class="block text-sm font-medium text-slate-700">4. Vos gencives saignent-elles lors du brossage ou de l'utilisation de fil dentaire ?</label>
+                    <select id="selectB1" name="b1" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, mes gencives sont fermes et saines</option>
+                        <option value="4">Oui, elles saignent régulièrement, même lors d'un brossage doux</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelB2" class="block text-sm font-medium text-slate-700">5. Avez-vous une carie non soignée, une dent de sagesse douloureuse ou une vieille couronne mobile ?</label>
+                    <select id="selectB2" name="b2" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, mon suivi dentaire est parfaitement à jour</option>
+                        <option value="5">Oui, j'ai une ou plusieurs zones dentaires suspectes ou douloureuses</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelB3" class="block text-sm font-medium text-slate-700">6. Observez-vous un dépôt blanc ou jaunâtre persistant sur l'arrière de votre langue au réveil ?</label>
+                    <select id="selectB3" name="b3" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, ma langue reste uniformément rose et propre</option>
+                        <option value="4">Oui, un enduit épais se reforme constamment sur l'arrière de la langue</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/60 space-y-4">
+                <h3 id="titleOrl" class="text-xs font-bold uppercase tracking-wider text-purple-600 mb-2">👃 Évaluation Spécifique : Sphère ORL & Respiratoire</h3>
+
+                <div class="space-y-2">
+                    <label id="labelO1" class="block text-sm font-medium text-slate-700">7. En observant le fond de votre gorge dans un miroir, remarquez-vous de petits grains blancs ou jaunes logés dans vos amygdales ?</label>
+                    <select id="selectO1" name="o1" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, mes amygdales sont parfaitement lisses</option>
+                        <option value="5">Oui, je vois parfois de petits dépôts crayeux très odorants (caséum)</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelO2" class="block text-sm font-medium text-slate-700">8. Souffrez-vous d'un écoulement post-nasal persistant ou de sinusite chronique ?</label>
+                    <select id="selectO2" name="o2" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, mes voies respiratoires sont totalement dégagées</option>
+                        <option value="4">Oui, je ressens ce besoin constant de racler ma gorge à cause d'un écoulement</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label id="labelO3" class="block text-sm font-medium text-slate-700">9. Ressentez-vous une sécheresse buccale intense au réveil ou travaillez-vous en environnement climatisé sans boire régulièrement ?</label>
+                    <select id="selectO3" name="o3" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-sm" required>
+                        <option value="0">Non, ma bouche reste normalement hydratée</option>
+                        <option value="3">Oui, j'ai la bouche très sèche, ce qui aggrave brutalement l'inconfort</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full premium-gradient text-white font-bold p-4 rounded-xl shadow-lg hover:opacity-95 transition transform active:scale-95 text-sm tracking-wide uppercase">
+                Lancer le calcul de l'Analyse Clinique
+            </button>
+        </form>
+
+        <div id="conversionGate" class="hidden mt-8 p-6 bg-slate-900 text-white rounded-2xl space-y-6 shadow-2xl border border-slate-800">
+            <div class="border-b border-slate-800 pb-4">
+                <h3 id="gateTitle" class="text-xl font-extrabold tracking-tight text-indigo-400 flex items-center gap-2">
+                    🔒 Votre Diagnostic est Prêt : Brisons ce Tabou Ensemble.
+                </h3>
+            </div>
+
+            <p id="teaserText" class="text-sm text-slate-300 leading-relaxed"></p>
+
+            <p id="gateDesc" class="text-sm text-slate-300 leading-relaxed">
+                Combien de chewing-gums inutiles, de bains de bouche décapants et de sourires cachés derrière votre main ? Cette honte invisible s'arrête aujourd'hui. L'algorithme a identifié la source exacte de votre inconfort. Vous êtes à un clic de votre <strong>renaissance totale</strong>.
+            </p>
+
+            <h4 id="formulaTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400 border-t border-slate-800 pt-4">Choisissez votre formule de Délivrance :</h4>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h5 id="titleF1" class="font-bold text-base text-white">📦 Formule Autonomie</h5>
+                        <p id="descF1" class="text-xs text-slate-400 mt-1 leading-relaxed">Rapport clinique complet pour votre médecin, liste des examens ciblés et guide nutritionnel anti-acidité.</p>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black text-white block mb-3">5 000 FCFA</span>
+                        <button id="btnF1" onclick="openPaymentModal('autonomie')" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 px-4 rounded-lg text-xs uppercase tracking-wider transition">
+                            Choisir l'Autonomie
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-950/40 p-5 rounded-xl border-2 border-indigo-500 flex flex-col justify-between space-y-4 relative overflow-hidden">
+                    <span id="badgeRecom" class="absolute top-0 right-0 bg-indigo-500 text-[9px] font-black uppercase text-white px-3 py-1 rounded-bl-lg tracking-widest">Recommandé</span>
+                    <div>
+                        <h5 id="titleF2" class="font-bold text-base text-indigo-300">💎 Accompagnement Élite</h5>
+                        <p id="descF2" class="text-xs text-slate-300 mt-1 leading-relaxed">Le rapport complet + un accès privé direct via WhatsApp pour un suivi quotidien durant vos 14 jours de traitement.</p>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black text-white block mb-3">15 000 FCFA</span>
+                        <button id="btnF2" onclick="openPaymentModal('elite')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-4 rounded-lg text-xs uppercase tracking-wider transition shadow-md shadow-indigo-900/50">
+                            Activer mon Suivi Privé
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div id="paymentModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl p-6 max-w-sm w-full space-y-4">
+                <h4 id="mdTitle" class="font-bold text-slate-900">Paiement Monetbil Mobile Money</h4>
+                <p class="text-xs text-slate-500" id="modeIndicator"></p>
+
+                <label id="mdLabelPhone" class="block text-xs font-medium text-slate-600">Numéro (format 237XXXXXXXXX)</label>
+                <input id="phoneInput" type="text" placeholder="237699999999" class="w-full p-3 border border-slate-200 rounded-xl text-sm" />
+
+                <div id="sandboxHelpers" class="text-[11px] text-slate-500 space-y-1 hidden">
+                    <p class="font-semibold">Numéros de test Bac à sable (Monetbil) :</p>
+                    <button type="button" class="underline" onclick="document.getElementById('phoneInput').value='237699999999'">Succès Orange Money — 237699999999</button><br>
+                    <button type="button" class="underline" onclick="document.getElementById('phoneInput').value='237677777777'">Succès MTN — 237677777777</button>
+                </div>
+
+                <div id="paymentError" class="hidden text-xs text-red-600"></div>
+                <div id="paymentStatus" class="hidden text-xs text-slate-600"></div>
+
+                <div class="flex gap-2">
+                    <button id="mdBtnCancel" onclick="closePaymentModal()" class="flex-1 py-2.5 rounded-lg text-xs font-bold border border-slate-200">Annuler</button>
+                    <button id="payConfirmBtn" onclick="confirmPayment()" class="flex-1 py-2.5 rounded-lg text-xs font-bold bg-indigo-600 text-white">Payer</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="finalReport" class="hidden mt-8 p-6 bg-white rounded-2xl border-2 border-slate-900 space-y-4">
+            <h3 id="reportTitle" class="text-lg font-bold text-slate-900 border-b pb-2">📋 Votre Protocole de Délivrance Débloqué</h3>
+            <div id="reportContent" class="text-sm text-slate-700 space-y-4"></div>
+        </div>
+
+    </main>
+
+    <footer id="footerText" class="bg-slate-900 text-slate-500 text-center text-xs p-5 border-t border-slate-800">
+        &copy; 2026 Délivrance Haleine. Tous droits réservés. Anonymat garanti.
+    </footer>
 
     <script>
-        // Système de traduction basique
+        // ---- Système de Traduction Dynamique ----
         let currentLang = 'fr';
-        const content = {
+        const translations = {
             fr: {
-                title: "Diagnostic Mauvaise Haleine",
-                desc: "Répondez à ces questions pour obtenir votre bilan personnalisé.",
-                btn: "English",
-                next: "Suivant"
+                langBtn: "🇬🇧 English",
+                badgeSecure: "Analyse Algorithmique Sécurisée",
+                welcomeTitle: "Bienvenue sur Délivrance Haleine. <br><span class='text-indigo-600 text-xl font-bold'>Vous êtes exactement au bon endroit, et vous pouvez enfin souffler.</span>",
+                welcomeText: "<p>Si vous êtes ici, c'est probablement parce que vous vivez avec un poids invisible au quotidien. La peur de parler de près, les chewing-gums qui s'enchaînent, les sourires retenus et cette sensation d'avoir tout essayé sans jamais trouver de vraie solution.</p><p class='font-semibold text-slate-700'>Sachez une chose : ce n'est pas de votre faute, et ce n'est pas un problème d'hygiène.</p><p>Notre protocole scientifique est conçu pour briser ce tabou. En moins de 5 minutes, notre algorithme va analyser vos signaux corporels (gastriques, buccaux et ORL) pour identifier la source exacte et invisible de votre inconfort. Ce bilan est <strong class='text-indigo-600'>100 % anonyme, confidentiel et sécurisé</strong>. Votre délivrance commence maintenant.</p>",
+                legalWarning: "<p class='font-bold mb-1 uppercase tracking-wider text-[10px]'>⚠️ Avertissement Légal :</p>Cette application est un outil d'orientation et de bien-être. Elle ne remplace en aucun cas une consultation médicale, un diagnostic médical ou une ordonnance.",
+                formTitle: "Dossier d'Analyse Clinique",
+                titleGastrique: "📋 Évaluation Spécifique : Sphère Gastrique",
+                labelG1: "1. Ressentez-vous des brûlures d'estomac ou des reflux acides qui remontent dans la gorge ?",
+                optsG1: ["Jamais ou très rarement", "Parfois, après des repas particulièrement lourds", "Très souvent, surtout la nuit, au réveil ou en position allongée"],
+                labelG2: "2. Comment réagit votre système digestif après un repas pimenté, épicé ou très gras ?",
+                optsG2: ["Je digère parfaitement sans aucun inconfort", "Crampes, ballonnements immédiats, ou sensation d'estomac totalement bloqué"],
+                labelG3: "3. Avez-vous de fréquentes éructations (rots) après les repas, et l'air expulsé a-t-il une odeur ou un goût fétide ?",
+                optsG3: ["Non, c'est très rare ou absent", "Oui, l'air qui remonte de l'estomac dégage une odeur lourde et perverse"],
+                titleBucco: "🦷 Évaluation Spécifique : Sphère Bucco-Dentaire",
+                labelB1: "4. Vos gencives saignent-elles lors du brossage ou de l'utilisation de fil dentaire ?",
+                optsB1: ["Non, mes gencives sont fermes et saines", "Oui, elles saignent régulièrement, même lors d'un brossage doux"],
+                labelB2: "5. Avez-vous une carie non soignée, une dent de sagesse douloureuse ou une vieille couronne mobile ?",
+                optsB2: ["Non, mon suivi dentaire est parfaitement à jour", "Oui, j'ai une ou plusieurs zones dentaires suspectes ou douloureuses"],
+                labelB3: "6. Observez-vous un dépôt blanc ou jaunâtre persistant sur l'arrière de votre langue au réveil ?",
+                optsB3: ["Non, ma langue reste uniformément rose et propre", "Oui, un enduit épais se reforme constamment sur l'arrière de la langue"],
+                titleOrl: "👃 Évaluation Spécifique : Sphère ORL & Respiratoire",
+                labelO1: "7. En observant le fond de votre gorge dans un miroir, remarquez-vous de petits grains blancs ou jaunes logés dans vos amygdales ?",
+                optsO1: ["Non, mes amygdales sont parfaitement lisses", "Oui, je vois parfois de petits dépôts crayeux très odorants (caséum)"],
+                labelO2: "8. Souffrez-vous d'un écoulement post-nasal persistant ou de sinusite chronique ?",
+                optsO2: ["Non, mes voies respiratoires sont totalement dégagées", "Oui, je ressens ce besoin constant de racler ma gorge à cause d'un écoulement"],
+                labelO3: "9. Ressentez-vous une sécheresse buccale intense au réveil ou travaillez-vous en environnement climatisé sans boire régulièrement ?",
+                optsO3: ["Non, ma bouche reste normalement hydratée", "Oui, j'ai la bouche très sèche, ce qui aggrave brutalement l'inconfort"],
+                submitBtn: "Lancer le calcul de l'Analyse Clinique",
+                gateTitle: "🔒 Votre Diagnostic est Prêt : Brisons ce Tabou Ensemble.",
+                gateDesc: "Combien de chewing-gums inutiles, de bains de bouche décapants et de sourires cachés derrière votre main ? Cette honte invisible s'arrête aujourd'hui. L'algorithme a identifié la source exacte de votre inconfort. Vous êtes à un clic de votre <strong>renaissance totale</strong>.",
+                formulaTitle: "Choisissez votre formule de Délivrance :",
+                titleF1: "📦 Formule Autonomie",
+                descF1: "Rapport clinique complet pour votre médecin, liste des examens ciblés et guide nutritionnel anti-acidité.",
+                btnF1: "Choisir l'Autonomie",
+                badgeRecom: "Recommandé",
+                titleF2: "💎 Accompagnement Élite",
+                descF2: "Le rapport complet + un accès privé direct via WhatsApp pour un suivi quotidien durant vos 14 jours de traitement.",
+                btnF2: "Activer mon Suivi Privé",
+                mdTitle: "Paiement Monetbil Mobile Money",
+                mdLabelPhone: "Numéro (format 237XXXXXXXXX)",
+                mdBtnCancel: "Annuler",
+                payConfirmBtn: "Payer",
+                reportTitle: "📋 Votre Protocole de Délivrance Débloqué",
+                footerText: "&copy; 2026 Délivrance Haleine. Tous droits réservés. Anonymat garanti."
             },
             en: {
-                title: "Bad Breath Diagnosis",
-                desc: "Answer these questions to get your personalized report.",
-                btn: "Français",
-                next: "Next"
+                langBtn: "🇫🇷 Français",
+                badgeSecure: "Secure Algorithmic Analysis",
+                welcomeTitle: "Welcome to Breath Deliverance. <br><span class='text-indigo-600 text-xl font-bold'>You are exactly in the right place, and you can finally breathe easy.</span>",
+                welcomeText: "<p>If you are here, it's probably because you live with an invisible burden daily. The fear of speaking closely, endless chewing gums, holding back smiles, and that feeling of having tried everything without ever finding a real solution.</p><p class='font-semibold text-slate-700'>Know one thing: it is not your fault, and it is not a hygiene issue.</p><p>Our scientific protocol is designed to break this tabou. In less than 5 minutes, our algorithm will analyze your bodily signals (gastric, oral, and ENT) to identify the exact and invisible source of your discomfort. This report is <strong class='text-indigo-600'>100% anonymous, confidential, and secure</strong>. Your deliverance starts now.</p>",
+                legalWarning: "<p class='font-bold mb-1 uppercase tracking-wider text-[10px]'>⚠️ Legal Disclaimer:</p>This application is an orientation and wellness tool. It by no means replaces medical consultation, medical diagnosis, or a prescription.",
+                formTitle: "Clinical Analysis File",
+                titleGastrique: "📋 Specific Evaluation: Gastric Sphere",
+                labelG1: "1. Do you experience heartburn or acid reflux moving up into your throat?",
+                optsG1: ["Never or very rarely", "Sometimes, after particularly heavy meals", "Very often, especially at night, upon waking up, or lying down"],
+                labelG2: "2. How does your digestive system react after a spicy, hot, or very fatty meal?",
+                optsG2: ["I digest perfectly without any discomfort", "Cramps, immediate bloating, or a feeling of a completely blocked stomach"],
+                labelG3: "3. Do you have frequent belching (burping) after meals, and does the expelled air have a foul smell or taste?",
+                optsG3: ["No, it's very rare or absent", "Yes, the air rising from the stomach releases a heavy and persistent odor"],
+                titleBucco: "🦷 Specific Evaluation: Oral & Dental Sphere",
+                labelB1: "4. Do your gums bleed when brushing or flossing?",
+                optsB1: ["No, my gums are firm and healthy", "Yes, they bleed regularly, even during gentle brushing"],
+                labelB2: "5. Do you have an untreated cavity, a painful wisdom tooth, or an old loose crown?",
+                optsB2: ["No, my dental follow-up is perfectly up to date", "Yes, I have one or more suspicious or painful dental areas"],
+                labelB3: "6. Do you notice a persistent white or yellowish coating on the back of your tongue upon waking up?",
+                optsB3: ["No, my tongue remains uniformly pink and clean", "Yes, a thick coating constantly reforms on the back of the tongue"],
+                titleOrl: "👃 Specific Evaluation: ENT & Respiratory Sphere",
+                labelO1: "7. When looking at the back of your throat in a mirror, do you notice small white or yellow stones lodged in your tonsils?",
+                optsO1: ["No, my tonsils are perfectly smooth", "Yes, I sometimes see small, very smelly chalky deposits (tonsil stones)"],
+                labelO2: "8. Do you suffer from persistent post-nasal drip or chronic sinusitis?",
+                optsO2: ["No, my respiratory tracts are completely clear", "Yes, I feel this constant need to clear her throat due to a drip"],
+                labelO3: "9. Do you experience intense dry mouth upon waking up or work in an air-conditioned environment without drinking regularly?",
+                optsO3: ["No, my mouth remains normally hydrated", "Yes, my mouth is very dry, which severely worsens discomfort"],
+                submitBtn: "Launch Clinical Analysis Calculation",
+                gateTitle: "🔒 Your Diagnosis is Ready: Let's Break This Taboo Together.",
+                gateDesc: "How many useless chewing gums, stripping mouthwashes, and smiles hidden behind your hand? This invisible shame ends today. The algorithm has identified the exact source of your discomfort. You are one click away from your <strong>total rebirth</strong>.",
+                formulaTitle: "Choose your Deliverance package:",
+                titleF1: "📦 Autonomy Formula",
+                descF1: "Complete clinical report for your doctor, list of targeted exams, and anti-acid nutrition guide.",
+                btnF1: "Choose Autonomy",
+                badgeRecom: "Recommended",
+                titleF2: "💎 Elite Accompaniment",
+                descF2: "The complete report + direct private access via WhatsApp for a daily follow-up during your 14 days of treatment.",
+                btnF2: "Activate My Private Follow-up",
+                mdTitle: "Monetbil Mobile Money Payment",
+                mdLabelPhone: "Phone number (format 237XXXXXXXXX)",
+                mdBtnCancel: "Cancel",
+                payConfirmBtn: "Pay",
+                reportTitle: "📋 Your Unlocked Deliverance Protocol",
+                footerText: "&copy; 2026 Breath Deliverance. All rights reserved. Anonymity guaranteed."
             }
         };
 
         function toggleLanguage() {
             currentLang = currentLang === 'fr' ? 'en' : 'fr';
-            document.getElementById('mainTitle').innerText = content[currentLang].title;
-            document.getElementById('mainDesc').innerText = content[currentLang].desc;
-            document.getElementById('langBtn').innerText = content[currentLang].btn;
-            document.getElementById('nextBtn').innerText = content[currentLang].next;
-            // Note: C'est ici qu'on gérera la traduction des questions en dynamique
+            const t = translations[currentLang];
+
+            document.getElementById('langBtn').innerText = t.langBtn;
+            document.getElementById('badgeSecure').innerText = t.badgeSecure;
+            document.getElementById('welcomeTitle').innerHTML = t.welcomeTitle;
+            document.getElementById('welcomeText').innerHTML = t.welcomeText;
+            document.getElementById('legalWarning').innerHTML = t.legalWarning;
+            document.getElementById('formTitle').innerText = t.formTitle;
+            
+            document.getElementById('titleGastrique').innerText = t.titleGastrique;
+            document.getElementById('labelG1').innerText = t.labelG1;
+            updateSelectOptions('selectG1', t.optsG1);
+            document.getElementById('labelG2').innerText = t.labelG2;
+            updateSelectOptions('selectG2', t.optsG2);
+            document.getElementById('labelG3').innerText = t.labelG3;
+            updateSelectOptions('selectG3', t.optsG3);
+
+            document.getElementById('titleBucco').innerText = t.titleBucco;
+            document.getElementById('labelB1').innerText = t.labelB1;
+            updateSelectOptions('selectB1', t.optsB1);
+            document.getElementById('labelB2').innerText = t.labelB2;
+            updateSelectOptions('selectB2', t.optsB2);
+            document.getElementById('labelB3').innerText = t.labelB3;
+            updateSelectOptions('selectB3', t.optsB3);
+
+            document.getElementById('titleOrl').innerText = t.titleOrl;
+            document.getElementById('labelO1').innerText = t.labelO1;
+            updateSelectOptions('selectO1', t.optsO1);
+            document.getElementById('labelO2').innerText = t.labelO2;
+            updateSelectOptions('selectO2', t.optsO2);
+            document.getElementById('labelO3').innerText = t.labelO3;
+            updateSelectOptions('selectO3', t.optsO3);
+
+            document.getElementById('submitBtn').innerText = t.submitBtn;
+            document.getElementById('gateTitle').innerText = t.gateTitle;
+            document.getElementById('gateDesc').innerHTML = t.gateDesc;
+            document.getElementById('formulaTitle').innerText = t.formulaTitle;
+            document.getElementById('titleF1').innerText = t.titleF1;
+            document.getElementById('descF1').innerText = t.descF1;
+            document.getElementById('btnF1').innerText = t.btnF1;
+            document.getElementById('badgeRecom').innerText = t.badgeRecom;
+            document.getElementById('titleF2').innerText = t.titleF2;
+            document.getElementById('descF2').innerText = t.descF2;
+            document.getElementById('btnF2').innerText = t.btnF2;
+
+            document.getElementById('mdTitle').innerText = t.mdTitle;
+            document.getElementById('mdLabelPhone').innerText = t.mdLabelPhone;
+            document.getElementById('mdBtnCancel').innerText = t.mdBtnCancel;
+            document.getElementById('payConfirmBtn').innerText = t.payConfirmBtn;
+            document.getElementById('reportTitle').innerText = t.reportTitle;
+            document.getElementById('footerText').innerHTML = t.footerText;
         }
 
-        function nextQuestion() {
-            alert("Bravo ! Le questionnaire fonctionne. Nous allons lier la suite au paiement Monetbil.");
+        function updateSelectOptions(selectId, optionsArray) {
+            const select = document.getElementById(selectId);
+            for (let i = 0; i < optionsArray.length; i++) {
+                if (select.options[i]) {
+                    select.options[i].text = optionsArray[i];
+                }
+            }
+        }
+
+        // ---- Friction anti-copie ----
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            const blocked = e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toUpperCase() === 'U');
+            if (blocked) e.preventDefault();
+        });
+
+        // ---- État applicatif & Logique Backend ----
+        const API_BASE = ''; 
+        const APP_MODE = 'sandbox'; 
+        let currentSessionId = null;
+        let currentFormula = null;
+        let pollTimer = null;
+
+        document.getElementById('mainForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const answers = Object.fromEntries(formData.entries());
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = currentLang === 'fr' ? 'Analyse en cours...' : 'Analysis in progress...';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/quiz/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers }),
+                });
+                if (!res.ok) throw new Error('Erreur serveur');
+                const data = await res.json();
+
+                currentSessionId = data.sessionId;
+                const baseTeaser = currentLang === 'fr' 
+                    ? `Nous venons de calculer vos scores. ${data.teaser} Ce que vous traversez n'est pas une fatalité, et ce n'est pas de votre faute.`
+                    : `We have just calculated your scores. ${data.teaser || ''} What you are going through is not a permanent fate, and it is not your fault.`;
+                
+                document.getElementById('teaserText').textContent = baseTeaser;
+                document.getElementById('mainForm').classList.add('hidden');
+                document.getElementById('conversionGate').classList.remove('hidden');
+            } catch (err) {
+                alert(currentLang === 'fr' ? "Une erreur est survenue lors de l'analyse. Réessayez." : "An error occurred during the analysis. Try again.");
+                btn.disabled = false;
+                btn.textContent = translations[currentLang].submitBtn;
+            }
+        });
+
+        function openPaymentModal(formula) {
+            currentFormula = formula;
+            document.getElementById('paymentModal').classList.remove('hidden');
+            document.getElementById('paymentError').classList.add('hidden');
+            document.getElementById('paymentStatus').classList.add('hidden');
+            document.getElementById('phoneInput').value = '';
+
+            const modeIndicator = document.getElementById('modeIndicator');
+            const helpers = document.getElementById('sandboxHelpers');
+            if (APP_MODE === 'sandbox') {
+                modeIndicator.textContent = currentLang === 'fr' ? 'Mode Bac à sable (test Monetbil) — montant réduit.' : 'Sandbox Mode (Monetbil test) — reduced amount.';
+                helpers.classList.remove('hidden');
+            } else {
+                const price = formula === 'elite' ? '15 000 FCFA' : '5 000 FCFA';
+                modeIndicator.textContent = currentLang === 'fr' ? `Montant à débiter via Monetbil : ${price}` : `Amount to charge via Monetbil: ${price}`;
+                helpers.classList.add('hidden');
+            }
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+            if (pollTimer) clearInterval(pollTimer);
+        }
+
+        async function confirmPayment() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            const errorEl = document.getElementById('paymentError');
+            const statusEl = document.getElementById('paymentStatus');
+            const payBtn = document.getElementById('payConfirmBtn');
+
+            errorEl.classList.add('hidden');
+            if (!/^237[0-9]{9}$/.test(phone)) {
+                errorEl.textContent = currentLang === 'fr' ? 'Numéro invalide. Format attendu : 237XXXXXXXXX' : 'Invalid number. Expected format: 237XXXXXXXXX';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            payBtn.disabled = true;
+            statusEl.classList.remove('hidden');
+            statusEl.textContent = currentLang === 'fr' ? 'Envoi de la demande de paiement...' : 'Sending payment request...';
+
+            try {
+                const res = await fetch(`${API_BASE}/payer`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: currentFormula === 'elite' ? 15000 : 5000, phone }),
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Erreur');
+
+                statusEl.textContent = currentLang === 'fr' ? 'Confirmez sur votre téléphone (USSD)... En attente de validation.' : 'Confirm on your phone (USSD)... Waiting for validation.';
+                
+                // Si Monetbil renvoie une URL de paiement directe (Widget v2.1)
+                if(data.payment_url) {
+                    window.location.href = data.payment_url;
+                }
+            } catch (err) {
+                errorEl.textContent = err.message;
+                errorEl.classList.remove('hidden');
+                statusEl.classList.add('hidden');
+                payBtn.disabled = false;
+            }
         }
     </script>
 </body>
